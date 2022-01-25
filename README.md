@@ -11,6 +11,10 @@ So, I decided to create a simple template for it where you just need to change e
 <h2>How to use</h2>
 
 ```bash
-g++.exe .\main.cpp -o .\main
+icon:
+windres.exe .\icon.rc -o .\icon.rs
+
+executable:
+g++.exe .\main.cpp .\rscs\icon.rs -o .\main -mwindows -static
 .\main.exe
 ```
