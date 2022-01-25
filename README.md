@@ -12,7 +12,7 @@ So, I decided to create a simple template for it where you just need to change e
 
 ```bash
 icon:
-windres.exe .\icon.rc -o .\icon.rs
+windres.exe .\rscs\icon.rc -o .\rscs\icon.rs
 
 executable:
 g++.exe .\main.cpp .\rscs\icon.rs -o .\main -mwindows -static
