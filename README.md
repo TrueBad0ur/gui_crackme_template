@@ -26,5 +26,5 @@ g++.exe .\main.cpp .\rscs\icon.rs -o .\main -mwindows -static
 
 ```bash
 rc.exe .\rscs\icon.rc
-cl.exe .\test.cpp /link .\rscs\icon.res User32.lib
+cl.exe .\main.cpp /link .\rscs\icon.res User32.lib
 ```
