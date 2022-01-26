@@ -1,1 +1,11 @@
-id ICON "icon.ico"
+ID ICON "icon.ico"
+
+3333 RCDATA 
+{
+    "First string!"
+}
+
+STRINGTABLE
+BEGIN
+    1337 "12345"
+END

@@ -14,7 +14,8 @@ HWND hPass;
 HWND hResult;
 HICON hIcon;
 
-int WINAPI main(int argc, char **argv) {
+
+//int WINAPI main(int argc, char **argv) {
     WNDCLASSA wc = {0};
 
     wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
