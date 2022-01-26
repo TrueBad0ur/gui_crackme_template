@@ -15,7 +15,8 @@ HWND hResult;
 HICON hIcon;
 
 
-int WINAPI main(int argc, char **argv) {
+int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow) {
+    //ShowWindow(GetConsoleWindow(), SW_HIDE);
     WNDCLASSA wc = {0};
 
     wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
@@ -26,7 +27,7 @@ int WINAPI main(int argc, char **argv) {
 
     if (!RegisterClassA(&wc)) {
         DWORD dw = GetLastError();
-        std::cout << dw << std::endl;
+        //std::cout << dw << std::endl;
         return -1;
     }
     
@@ -53,12 +54,12 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
                         SetWindowTextA(hResult, "name and pass should have the same length");
                         break;
                     }
-                    CHAR name[name_len];
-                    CHAR pass[name_len];
+                    char *name = new char[name_len];
+                    char *pass = new char[name_len];
                     GetWindowTextA(hName, name, name_len+1);
                     GetWindowTextA(hPass, pass, name_len+1);
 
-                    CHAR result[name_len];
+                    char *result = new char[name_len];
                     encode_func(name, name_len, result);
                     if (!strncmp(result, pass, name_len)) {
                         SetWindowTextA(hResult, "Well, you win!");
