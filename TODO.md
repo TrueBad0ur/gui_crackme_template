@@ -1,6 +1,6 @@
 ### Todo
 
-- [ ] Icon
+- [x] Icon
 - [ ] Background image 
 - [ ] Music (yes, music!)  
 
