@@ -1,5 +1,7 @@
 ID ICON "icon.ico"
 
+1556 WAVE music.wav 
+
 3333 RCDATA 
 {
     "First string!"

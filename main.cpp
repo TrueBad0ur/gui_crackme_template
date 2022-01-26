@@ -13,6 +13,7 @@ HWND hName;
 HWND hPass;
 HWND hResult;
 HICON hIcon;
+int music_wav;
 
 
 int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow) {
@@ -71,6 +72,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
             }
             break;
         case WM_CREATE:
+            music_wav = PlaySound(MAKEINTRESOURCE(1556), GetModuleHandleA(NULL), SND_RESOURCE | SND_ASYNC);
             hIcon = LoadIcon(NULL, IDI_SHIELD); 
             SendMessage(hWnd, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
             AddControls(hWnd);

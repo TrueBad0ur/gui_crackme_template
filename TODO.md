@@ -2,7 +2,8 @@
 
 - [x] Icon
 - [ ] Background image 
-- [ ] Music (yes, music!)  
+- [x] Music (yes, music!)
+- [ ] Beautify
 
 ### Done ✓
 
