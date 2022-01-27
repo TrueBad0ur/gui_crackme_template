@@ -12,8 +12,10 @@ void AddControls(HWND);
 HWND hName;
 HWND hPass;
 HWND hResult;
+HWND hButton;
 HICON hIcon;
 int music_wav;
+HDC hEdit;
 
 int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow) {
     //ShowWindow(GetConsoleWindow(), SW_HIDE);
@@ -44,10 +46,57 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
     return 0;
 }
 
-LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
+LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     switch (msg) {
+        //case WM_DRAWITEM:
+        //    hEdit = (HDC)wParam;
+        //    SetTextColor(hEdit, RGB(255, 255, 255));
+        //    SetBkColor(hEdit, TRANSPARENT);
+        //    return (INT_PTR)CreateSolidBrush(RGB(0, 0, 0));
+        case WM_CTLCOLORBTN:
+            hEdit = (HDC)wParam;
+            SetTextColor(hEdit, RGB(255, 255, 255));
+            SetBkColor(hEdit, RGB(0, 255, 0));
+            //SetBkMode((HDC)wParam, TRANSPARENT);
+            return (INT_PTR)CreateSolidBrush(RGB(0, 255, 0));
+        //case WM_CTLCOLORSTATIC:
+        //    hEdit = (HDC)wParam;
+        //    SetTextColor(hEdit, RGB(0, 0, 0));
+        //    SetBkColor(hEdit, RGB(167, 219, 243));
+        //    return (INT_PTR)CreateSolidBrush(RGB(167, 219, 243));
+        case WM_CTLCOLOREDIT:
+            if (hName == (HWND)lParam) {
+                hEdit = (HDC)wParam;
+                SetTextColor(hEdit, RGB(0, 0, 0));
+                SetBkColor(hEdit, RGB(0, 255, 0));
+                return (INT_PTR)CreateSolidBrush(RGB(0, 255, 0));
+            } else if (hPass == (HWND)lParam) {
+                hEdit = (HDC)wParam;
+                SetTextColor(hEdit, RGB(0, 0, 0));
+                SetBkColor(hEdit, RGB(255, 0, 0));
+                return (INT_PTR)CreateSolidBrush(RGB(255, 0, 0));
+            } else if (hResult == (HWND)lParam) {
+                hEdit = (HDC)wParam;
+                SetTextColor(hEdit, RGB(0, 0, 0));
+                SetBkColor(hEdit, RGB(0, 0, 255));
+                return (INT_PTR)CreateSolidBrush(RGB(0, 0, 255));
+            }
+            //} else if (hButton == (HWND)lParam) {
+            //    hEdit = (HDC)wParam;
+            //    SetTextColor(hEdit, RGB(255, 255, 255));
+            //    SetBkColor(hEdit, RGB(0, 0, 0));
+            //   return (INT_PTR)CreateSolidBrush(RGB(0, 0, 0));
+            break;
+
+        //case WM_CTLCOLORSTATIC:
+        //    local_hWnd = hWnd;
+        //    hEdit = (HDC)wp;
+        //    SetTextColor(hEdit, RGB(0, 0, 0));
+        //    SetBkColor(hEdit, RGB(255, 255, 255));
+        //    return (INT_PTR)GetStockObject(BLACK_BRUSH);
+
         case WM_COMMAND:
-            switch (wp) {
+            switch (wParam) {
                 case BUTTON_CLICK:
                     int name_len = GetWindowTextLengthA(hName);
                     int pass_len = GetWindowTextLengthA(hPass);
@@ -72,7 +121,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
             }
             break;
         case WM_CREATE:
-            music_wav = PlaySound(MAKEINTRESOURCE(1556), GetModuleHandleA(NULL), SND_RESOURCE | SND_ASYNC);
+            music_wav = PlaySound(MAKEINTRESOURCE(1556), GetModuleHandleA(NULL), SND_LOOP | SND_RESOURCE | SND_ASYNC);
             //hIcon = LoadIcon(NULL, IDI_SHIELD); 
             SendMessage(hWnd, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
             AddControls(hWnd);
@@ -85,7 +134,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
             PostQuitMessage(0);
             break;
         default:
-            return DefWindowProcA(hWnd, msg, wp, lp);
+            return DefWindowProcA(hWnd, msg, wParam, lParam);
     }
     return 0;
 }
@@ -96,23 +145,23 @@ void AddControls(HWND hWnd) {
         NULL, NULL, NULL);
 
 
-    CreateWindowA("Static", "Enter you name here: ", WS_VISIBLE | WS_CHILD | SS_CENTER, 10, 100, 100, 50, 
+    CreateWindowA("Static", "Enter you name here: ", WS_VISIBLE | WS_CHILD | SS_CENTER, 10, 100, 100, 50,
                     hWnd, NULL, NULL, NULL);
     hName = CreateWindowA("Edit", "...", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL, 120, 100, 100, 25,
                     hWnd, NULL, NULL, NULL);
 
-    CreateWindowA("Static", "Enter you pass here: ", WS_VISIBLE | WS_CHILD | SS_CENTER, 10, 150, 100, 50, 
+    CreateWindowA("Static", "Enter you pass here: ", WS_VISIBLE | WS_CHILD | SS_CENTER, 10, 150, 100, 50,
                     hWnd, NULL, NULL, NULL);
     hPass = CreateWindowA("Edit", "...", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL, 120, 150, 100, 25,
                     hWnd, NULL, NULL, NULL);
 
 
-    hResult = CreateWindowA("Edit", "", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_READONLY, 120, 220, 300, 200, 
+    hResult = CreateWindowA("Edit", "...", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_MULTILINE | ES_AUTOVSCROLL, 120, 220, 300, 200,
                     hWnd, NULL, NULL, NULL);
 
 
-
-    CreateWindowA("Button", "Run", WS_VISIBLE | WS_CHILD, 10, 205, 100, 50,
+    //BS_OWNERDRAW SS_NOTIFY
+    hButton = CreateWindowA("Button", "Run", WS_VISIBLE | WS_CHILD | BS_OWNERDRAW, 10, 205, 100, 50,
                     hWnd, (HMENU)BUTTON_CLICK, NULL, NULL);
     
 }
