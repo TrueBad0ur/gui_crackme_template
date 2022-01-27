@@ -15,16 +15,16 @@ HWND hResult;
 HICON hIcon;
 int music_wav;
 
-
 int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow) {
     //ShowWindow(GetConsoleWindow(), SW_HIDE);
     WNDCLASSA wc = {0};
 
-    wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.hInstance = GetModuleHandleA(0);
     wc.lpszClassName = "myWindowClass";
     wc.lpfnWndProc = WindowProcedure;
+    wc.hIcon = static_cast<HICON>(LoadImage(GetModuleHandleA(0), MAKEINTRESOURCE(1336), IMAGE_ICON, 48, 48, LR_DEFAULTCOLOR));
+    wc.hbrBackground = CreateSolidBrush(RGB(255, 242, 204));
 
     if (!RegisterClassA(&wc)) {
         DWORD dw = GetLastError();
@@ -73,9 +73,13 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
             break;
         case WM_CREATE:
             music_wav = PlaySound(MAKEINTRESOURCE(1556), GetModuleHandleA(NULL), SND_RESOURCE | SND_ASYNC);
-            hIcon = LoadIcon(NULL, IDI_SHIELD); 
+            //hIcon = LoadIcon(NULL, IDI_SHIELD); 
             SendMessage(hWnd, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
             AddControls(hWnd);
+
+            //hBGcolor = GetDC(hWnd);
+            //tst = SetBkColor(hBGcolor, RGB(0, 0, 0));
+
             break;
         case WM_DESTROY:
             PostQuitMessage(0);
@@ -87,6 +91,11 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 }
 
 void AddControls(HWND hWnd) {
+
+    CreateWindowA("testclass", "My Window", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 500, 500, NULL,
+        NULL, NULL, NULL);
+
+
     CreateWindowA("Static", "Enter you name here: ", WS_VISIBLE | WS_CHILD | SS_CENTER, 10, 100, 100, 50, 
                     hWnd, NULL, NULL, NULL);
     hName = CreateWindowA("Edit", "...", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL, 120, 100, 100, 25,
