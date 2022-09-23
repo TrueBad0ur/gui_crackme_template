@@ -27,4 +27,5 @@ g++.exe .\main.cpp .\rscs\icon.rs -o .\main -mwindows -static
 ```bash
 rc.exe .\rscs\icon.rc
 cl.exe .\main.cpp /link .\rscs\icon.res User32.lib Winmm.lib Gdi32.lib /SUBSYSTEM:WINDOWS
+cmd /c 'call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat" && cl.exe .\main.cpp /link .\rscs\icon.res User32.lib Winmm.lib Gdi32.lib /SUBSYSTEM:WINDOWS'
 ```
